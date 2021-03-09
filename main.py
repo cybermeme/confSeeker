@@ -3,6 +3,9 @@
 """
 com-commander is the main software of confseeker
 
+mind that I implement variables names in camelcase and constantes and fonctions
+name with '_' even if it is not bests practices it is easier to me to read the code
+
 @author: cybermeme
 """
 
@@ -79,7 +82,7 @@ def creation_two_panes(file1 = None, file2 = None):
     ''' launches the creation_two_panes of the tmux display and 
         launches the display in the panes '''
     creation_two_panes_first_zone()
-    if (file1 and file2):
+    if file1 and file2:
         rightPane.send_keys(base_tool_dir + 'cat_file.py '+ (file1))
         leftPane.send_keys(base_tool_dir + 'cat_file.py '+ (file2))
         underPane.send_keys('diff ' + file1 + ' ' + file2)
@@ -120,8 +123,7 @@ def com_comander_parser():
     elif len(sys.argv) == 2 and (sys.argv[1] == "close" or sys.argv[1] == "quit"):
         close_session()
     elif len(sys.argv) == 2 and sys.argv[1] == "help":
-        help_com_comander()
-        
+        help_com_comander() 
 
 
 def help_com_comander():
