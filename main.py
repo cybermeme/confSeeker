@@ -78,9 +78,10 @@ def triage(file):
         leftPane.send_keys(base_tool_dir + 'unix_parser.py '+ file)
 
 
-def creation_two_panes(file1 = None, file2 = None):
+def creation_two_panes(file1 = '', file2 = ''):
     ''' launches the creation_two_panes of the tmux display and 
         launches the display in the panes '''
+    print('file', file2)
     creation_two_panes_first_zone()
     if file1 and file2:
         rightPane.send_keys(base_tool_dir + 'cat_file.py '+ (file1))
@@ -103,12 +104,15 @@ def close_session():
 
 def com_comander():
     ''' main function parsing the arguments '''
-    if len(sys.argv) == 2 and (sys.argv[1] == "help" or sys.argv[1] == "-h"):
+    if len(sys.argv) == 4 and sys.argv[1] == "diff":
+        creation_two_panes(sys.argv[2], sys.argv[3])
+    elif len(sys.argv) == 2 and (sys.argv[1] == "help" or sys.argv[1] == "-h"):
         help_com_comander()
     else:
         #if no session create one
         try:
             creation_two_panes()
+            print ('ca route1')
         #if session parse the arguments
         except:
             com_comander_parser()
@@ -118,9 +122,7 @@ def com_comander_parser():
     ''' parse the arguments
         I chose to do it manually rather than using argparse in order to be 
         able to launch the environment without argument.'''
-    if len(sys.argv) == 4 and sys.argv[1] == "diff":
-        creation_two_panes(sys.argv[2], sys.argv[3])    
-    elif len(sys.argv) == 2 and (sys.argv[1] == "close" or sys.argv[1] == "quit"):
+    if len(sys.argv) == 2 and (sys.argv[1] == "close" or sys.argv[1] == "quit"):
         close_session()
     elif len(sys.argv) == 2 and sys.argv[1] == "help":
         help_com_comander() 
@@ -133,7 +135,6 @@ def help_com_comander():
           + sys.argv[0] + ' diff /path/to/file1 /path/to/file2 = diff 2 files\n' \
           + sys.argv[0] + ' [close|quit] = close the tool\n')
 
-
 # DEFINITIONS END #
 
 
@@ -141,5 +142,4 @@ def help_com_comander():
 # START #
 
 com_comander()
-
 
