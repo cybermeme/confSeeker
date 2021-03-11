@@ -1,0 +1,8 @@
+---
+- name: add_path_all
+  command:
+    cmd: 'echo "export PATH=$PATH:/opt/addSofts/confSeeker" >> /etc/profile'
+
+- name: add_path_existing
+  command:
+    cmd: 'python3 /opt/addSofts/confSeeker/tools/setup_user_path.py'

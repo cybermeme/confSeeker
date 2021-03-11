@@ -13,7 +13,6 @@ name with '_' even if it is not bests practices it is easier to me to read the c
 
 import libtmux
 import os
-import signal
 import sys
 
 # LIBRARIES END #
@@ -25,6 +24,8 @@ import sys
 base_folder = '/etc'
 default_file = '/etc/motd'
 base_tool_dir = (os.getcwd() + '/tools/')
+defaut_list_file_tool = (base_tool_dir + 'cat_file.py')
+#defaut_list_file_tool = 'less'
 
 # VARIABLES END #
 
@@ -81,15 +82,15 @@ def triage(file):
 def creation_two_panes(file1 = '', file2 = ''):
     ''' launches the creation_two_panes of the tmux display and 
         launches the display in the panes '''
-    print('file', file2)
     creation_two_panes_first_zone()
     if file1 and file2:
-        rightPane.send_keys(base_tool_dir + 'cat_file.py '+ (file1))
-        leftPane.send_keys(base_tool_dir + 'cat_file.py '+ (file2))
+        rightPane.send_keys(defaut_list_file_tool + ' ' + (file1))
+        leftPane.send_keys(defaut_list_file_tool + ' ' + (file2))
         underPane.send_keys('diff ' + file1 + ' ' + file2)
     else:
         #print in the right panes
-        rightPane.send_keys(base_tool_dir + 'cat_file.py '+ (file_base_definition()))
+        rightPane.send_keys(defaut_list_file_tool + ' ' +\
+                            (file_base_definition()))
         #print in the left panes
         triage(file_base_definition())
     #open tmux and attach the session
@@ -112,7 +113,6 @@ def com_comander():
         #if no session create one
         try:
             creation_two_panes()
-            print ('ca route1')
         #if session parse the arguments
         except:
             com_comander_parser()
@@ -141,5 +141,8 @@ def help_com_comander():
 
 # START #
 
-com_comander()
+# If sudo, set UID 0 to keep the good rights to open files
+uid = os.getuid()
+os.setuid(uid) 
 
+com_comander()

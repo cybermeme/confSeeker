@@ -1,0 +1,27 @@
+---
+- name: installation of basis
+  package:
+    name: "{{ item }}"
+    state: latest
+  loop:
+    - 'python3'
+    - 'tmux'
+
+- name: installation of the lib to manage tmux
+  pip:
+    name: libtmux
+
+- name: creation of folder
+  file:
+    path: '/opt/addSofts/confSeeker'
+    state: directory
+
+- name: copying the tool on the remote destination
+  unarchive:
+    src: "{{ role_path }}/files/confSeeker.zip"
+    dest: '/opt/addSofts/confSeeker'
+    mode: '770'
+  notify:
+    - add_path_all
+    - add_path_existing
+

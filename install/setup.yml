@@ -1,0 +1,6 @@
+---
+- name: Install of confSeeker
+  hosts: confseekertarget
+  become: true
+  roles:
+    - installConfSeeker
