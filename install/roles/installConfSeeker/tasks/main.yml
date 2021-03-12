@@ -23,5 +23,4 @@
     mode: '770'
   notify:
     - add_path_all
-    - add_path_existing
 

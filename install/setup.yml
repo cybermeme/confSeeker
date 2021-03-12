@@ -4,3 +4,10 @@
   become: true
   roles:
     - installConfSeeker
+  tasks:
+    - name: "add path to every .bashrc"
+      confseeker:
+        homeDirectory: "/home"
+        shellConf: ".bashrc"
+   #   register: results
+   # - debug: var=results

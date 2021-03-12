@@ -5,6 +5,3 @@
     line: "export PATH=$PATH:/opt/addSofts/confSeeker"
     insertafter: EOF
 
-- name: add_path_existing
-  command:
-    cmd: 'python3 /opt/addSofts/confSeeker/tools/setup_user_path.py'
