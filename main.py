@@ -143,6 +143,9 @@ def help_com_comander():
 
 # If sudo, set UID 0 to keep the good rights to open files
 uid = os.getuid()
-os.setuid(uid) 
 
+if uid == 0:
+    os.setuid(uid) 
+    
 com_comander()
+

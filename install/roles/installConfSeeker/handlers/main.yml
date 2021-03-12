@@ -1,7 +1,9 @@
 ---
 - name: add_path_all
-  command:
-    cmd: 'echo "export PATH=$PATH:/opt/addSofts/confSeeker" >> /etc/profile'
+  lineinfile:
+    dest: /etc/profile
+    line: "export PATH=$PATH:/opt/addSofts/confSeeker"
+    insertafter: EOF
 
 - name: add_path_existing
   command:

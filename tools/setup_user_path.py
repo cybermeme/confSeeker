@@ -77,4 +77,4 @@ def main():
 if os.getuid() == 0:
     main()
 else:
-    return 1
+    return "Warning, this program have to be run as root"
