@@ -7,8 +7,8 @@ first install :
 	- python3
 	- tmux
 Then:
-```bash
-$ cd install`
+```
+$ cd install
 $ ansible-playbook ./setup.yml -u userNameWithAdminPrivileges
 ```
 
@@ -20,8 +20,8 @@ you can change the installation targets by changing the hosts parameter in setup
 	- pip3
 	- tmux
 
-```bash
-$ pip3 install -r ./requirement.txt`
+```
+$ pip3 install -r ./requirement.txt
 ```
 
 ### difference between the two types of installations.
@@ -30,8 +30,8 @@ Ansible will allow you to deploy the tool on the different servers you administr
 The manual installation will only be available locally and you will have to manually add the PATH if you wish.
 To add the path:
 
-```bash
-$ export PATH=$PATH:PathToConfseeker`
+```
+$ export PATH=$PATH:PathToConfseeker
 ```
 and for persistence, add this line to the end of your local shell configuration file (e.g. /home/$(whoami)/.bashrc)
 
@@ -51,20 +51,22 @@ If not, from the terminal, enter $ tmux attach-session
 
 If no arguments are entered, confseeker will open /etc/motd
 
-```bash
-$ ./confSeeker.py help`
-`
-	Usage : ./confSeeker.py /path/to/file/to/parse`
-`
-./confSeeker.py help = this message in the commander`
-./confSeeker.py diff /path/to/file1 /path/to/file2 = diff 2 files`
-./confSeeker.py [close|quit] = close the tool`
+```
+$ ./confSeeker.py help
+
+	Usage : ./confSeeker.py /path/to/file/to/parse
+
+./confSeeker.py help = this message in the commander
+./confSeeker.py diff /path/to/file1 /path/to/file2 = diff 2 files
+./confSeeker.py [close|quit] = close the tool
 ```
 
 By default, when running confSeeker with or without sudo depending on the rights of the file to be read, the program will open tmux and split the window into three:
     - At the top right, a cat of the requested file appears, to take over, you just have to hit 'Enter', it is possible by modifying the defaut_list_file_tool variable to open the file with another program (ex: less)
     - At the top left, the file appears after having been parsed to remove comments (lines starting with ';' or '#') and in JSON form if it was an xml file
     - At the bottom (panes having the hand by default), the user is directed automatically in the /etc folder (configurable by modifying the base_folder variable) and can thus carry out its administration functions
+
+![alt text](https://github.com/cybermeme/confSeeker/raw/devel/src/capture1.png "screen shot")
 
 When the work is finished, to close the environment, you must call confSeeker with either the close or quit option
 
