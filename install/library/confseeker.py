@@ -4,17 +4,73 @@
 @author: cybermeme
 """
 
+from __future__ import (absolute_import, division, print_function)
+__metaclass__ = type
+
+DOCUMENTATION = r'''
+---
+module: confseeker
+
+short_description: adds the confseeker path in all .bashrc
+
+version_added: "1.0.0"
+
+description: This module will scan the /etc/passwd file for users home 
+directories and then search for .bashrc files, if such a file exists, it 
+will add the program path at the end
+
+options:
+    homeDirectory:
+        description: the location of the home directories in the structure, 
+        by default it is '/home'.
+        required: false
+        type: str
+        default: /home
+        
+    shellConf:
+        description: shell config file to add the PATH structure
+        required: false
+        type: str
+        default: .bashrc
+        
+    passwordFile:
+         description: location of the password file (to extract users home 
+                                                     directory)
+        required: false
+        type: str
+        default: /etc/passwd   
+        
+    uidMini:
+        description: uid minimum to search for users 
+        required: false
+        type: int
+        default: 500
+
+author:
+    - https://github.com/cybermeme (@cybermeme)
+'''
+
+EXAMPLES = r'''
+# If you have weird users ;-)
+- name: Users using ksh
+  conseeker:
+    shellConf: .kshrc
+
+# UID minimum
+- name: If you want to scan after the user 1005
+  conseeker:
+    uidMini: 1006
+
+'''
+
+
 
 # LIBRARIES BEGIN #
 
 import os
-
-#from ansible.module_utils.basic import AnsibleModule 
-
 from ansible.module_utils.basic import *
 
 # LIBRARIES END #
-
 
 
 # DEFINITIONS BEGIN #

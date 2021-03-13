@@ -12,7 +12,7 @@ import sys
 
 def clean_line(data):
     ''' remove the lines beginning with # or ;; '''
-    if not data.startswith('#') and not data.startswith(';;'):
+    if not data.startswith('#') and not data.startswith(';'):
         return data.replace("\n","")
     else:
         pass
