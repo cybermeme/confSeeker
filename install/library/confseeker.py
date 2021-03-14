@@ -73,13 +73,24 @@ from ansible.module_utils.basic import *
 # LIBRARIES END #
 
 
+
+# VARIABLES BEGIN #
+
+result_ok = False
+
+# VARIABLES END #
+
+
+
 # DEFINITIONS BEGIN #
 
 def get_user_home():
     """ grep users directory in /etc/passwd file """
     with open(password_file) as file:
         listRep = []
+
         for line in file:
+
             if  int(line.split(":")[2])  >= uid_mini and not 'nologin' in line:
             # home extraction
                 listRep += [line.split(":")[5]]
@@ -91,7 +102,9 @@ def base_rep_hunting(module):
     listUser = get_user_home()
     folder_inside = os.listdir(home_config_dir)
     for userScanned in folder_inside:
+
         for listUserString in listUser:
+
             if userScanned in listUserString:
                 fullPath = (home_config_dir + '/' + userScanned)
                 config_file_hunting(fullPath, module)
@@ -102,6 +115,9 @@ def add_in_bashrc(fullPath, module):
         f = open(fullPath, "a")
         f.write("export PATH=$PATH:/opt/addSofts/confSeeker")
         f.close()
+        global result_ok
+        result_ok = True
+
     except:
         module.fail_json(msg="Can't open file .bashrc")   
 
@@ -110,25 +126,30 @@ def config_file_hunting(filePath, module):
     """ look for .bashrc """
     folder_inside = os.listdir(filePath)
     for files in folder_inside:
+
         if files == home_config_shell:
             fullPath = filePath + '/' + files
+
             try:
                 f = open(fullPath, "r")
                 searchLine = f.read()
                 f.close()
+
                 if not 'confSeeker' in searchLine:
                     add_in_bashrc(fullPath, module)
+
             except:
                 module.fail_json(msg="Can't open file .bashrc") 
     return 0
 
 
 def main():
+    """ Definition of modules variables """
     fields = {
         "homeDirectory": {"default": "/home", "required": False, "type": "str"}, 
         "shellConf": {"default": ".bashrc", "required": False, "type": "str"}, 
         "passwordFile": {"default": "/etc/passwd", "required": False, "type": "str"}, 
-		"uidMini": {"default": 500, "required": False, "type": "int"}, 
+		"uidMini": {"default": 500, "required": False, "type": "int"},
     }
     module = AnsibleModule(argument_spec=fields)
 
@@ -141,10 +162,15 @@ def main():
     password_file = module.params.get('passwordFile')
     uid_mini = module.params.get('uidMini')
     home_config_shell = module.params.get('shellConf')
-    
+
     base_rep_hunting(module)
 
-    module.exit_json(changed=False, msg=module.params)  
+
+    if result_ok:
+        module.exit_json(changed=True, msg=module.params)
+
+    else:
+        module.exit_json(changed=False, msg=module.params)  
 
 # DEFINITIONS END #
 

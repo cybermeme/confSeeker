@@ -1,0 +1,3 @@
+Options to add:
+	- close only the current window / every window in once
+	- open new file in new window
