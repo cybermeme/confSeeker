@@ -23,7 +23,8 @@ import sys
 
 base_folder = '/etc'
 default_file = '/etc/motd'
-base_tool_dir = (os.getcwd() + '/tools/')
+base_tool_dir = ('/opt/addSofts/confSeeker/tools/')
+#base_tool_dir = (os.getcwd() + '/tools/')
 defaut_list_file_tool = (base_tool_dir + 'cat_file.py')
 #defaut_list_file_tool = 'less'
 

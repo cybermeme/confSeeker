@@ -20,7 +20,7 @@
   unarchive:
     src: "{{ role_path }}/files/confSeeker.zip"
     dest: '/opt/addSofts/confSeeker'
-    mode: '770'
+    mode: '775'
   notify:
     - add_path_all
 
