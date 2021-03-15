@@ -134,23 +134,30 @@ def add_in_bashrc(fullPath, module):
 
 def config_file_hunting(filePath, module):
     """ look for .bashrc """
+    #First adding for root#
+    rootpath = '/root/' + home_config_shell
+    verif_not_path_in_file(rootpath, module)
+    #Then adding for users#
     folder_inside = os.listdir(filePath)
     for files in folder_inside:
 
         if files == home_config_shell:
             fullPath = filePath + '/' + files
-
-            try:
-                f = open(fullPath, "r")
-                searchLine = f.read()
-                f.close()
-
-                if not 'confSeeker' in searchLine:
-                    add_in_bashrc(fullPath, module)
-
-            except:
-                module.fail_json(msg="Can't open file .bashrc") 
+            verif_not_path_in_file(fullPath, module)
     return 0
+
+
+def verif_not_path_in_file(fullPath, module):
+    try:
+        f = open(fullPath, "r")
+        searchLine = f.read()
+        f.close()
+    
+        if not 'confSeeker' in searchLine:
+            add_in_bashrc(fullPath, module)
+    
+    except:
+        module.fail_json(msg="Can't open file .bashrc") 
 
 
 def main():

@@ -2,6 +2,7 @@
 - name: Install of confSeeker
   hosts: confseekertarget
   become: true
+  gather_facts: false
   roles:
     - installConfSeeker
   tasks:
@@ -9,5 +10,10 @@
       confseeker:
         homeDirectory: "/home"
         shellConf: ".bashrc"
-   #   register: results
-   # - debug: var=results
+
+    - name: "adding path for sudoers"
+      lineinfile:
+        path: /etc/sudoers
+        regexp: 'secure_path'
+        insertafter: 'Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin'
+        line: 'Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin:/opt/addSofts/confSeeker'
