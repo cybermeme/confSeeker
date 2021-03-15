@@ -20,9 +20,14 @@ directories and then search for .bashrc files, if such a file exists, it
 will add the program path at the end
 
 options:
+    name:
+        description: the line that will be added at the end of the file.
+        required: false
+        type: str
+        default: export PATH=$PATH:/opt/addSofts/confSeeker      
+    
     homeDirectory:
-        description: the location of the home directories in the structure, 
-        by default it is '/home'.
+        description: the location of the home directories in the structure.
         required: false
         type: str
         default: /home
@@ -51,6 +56,11 @@ author:
 '''
 
 EXAMPLES = r'''
+# If you install confSeeker in a specific place
+- name: change path
+  conseeker:
+    name: 'export PATH=$PATH:/opt/somewhere/in/the/fs/bin'
+
 # If you have weird users ;-)
 - name: Users using ksh
   conseeker:
@@ -113,7 +123,7 @@ def base_rep_hunting(module):
 def add_in_bashrc(fullPath, module):
     try:
         f = open(fullPath, "a")
-        f.write("export PATH=$PATH:/opt/addSofts/confSeeker")
+        f.write(conf_path)
         f.close()
         global result_ok
         result_ok = True
@@ -146,6 +156,8 @@ def config_file_hunting(filePath, module):
 def main():
     """ Definition of modules variables """
     fields = {
+        "name": {"default": "export PATH=$PATH:/opt/addSofts/confSeeker",\
+                 "required": False, "type": "str"}, 
         "homeDirectory": {"default": "/home", "required": False, "type": "str"}, 
         "shellConf": {"default": ".bashrc", "required": False, "type": "str"}, 
         "passwordFile": {"default": "/etc/passwd", "required": False, "type": "str"}, 
@@ -153,6 +165,7 @@ def main():
     }
     module = AnsibleModule(argument_spec=fields)
 
+    global conf_path
     global home_config_dir
     global home_config_shell
     global password_file
@@ -162,6 +175,7 @@ def main():
     password_file = module.params.get('passwordFile')
     uid_mini = module.params.get('uidMini')
     home_config_shell = module.params.get('shellConf')
+    conf_path = module.params.get('name')
 
     base_rep_hunting(module)
 

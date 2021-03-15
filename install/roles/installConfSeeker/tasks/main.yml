@@ -5,6 +5,7 @@
     state: latest
   loop:
     - 'python3'
+    - 'python3-pip'
     - 'tmux'
 
 - name: installation of the lib to manage tmux
