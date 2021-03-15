@@ -9,11 +9,14 @@ first install :
 Then:
 ```
 $ cd install
-$ ansible-playbook ./setup.yml -u userNameWithAdminPrivileges
+$ ansible-playbook ./setup.yml -u userNameWithAdminPrivileges -k -K
 ```
 
 you can change the installation targets by changing the hosts parameter in setup.yml
 
+### Tested on:
+Centos Srteam 8
+Ubuntu 20.10
 
 ## Manual install
 	- python3
