@@ -11,9 +11,12 @@
         homeDirectory: "/home"
         shellConf: ".bashrc"
 
+# Warning ! sudo secure_path can be exploited by attacker if you weirdly decide to add a NOPASSWD value 
+# carrefully list your admin users in loop
     - name: "adding path for sudoers"
       lineinfile:
-        path: /etc/sudoers
-        regexp: 'secure_path'
-        insertafter: 'Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin'
+        path: /etc/sudoers.d/"{{ item }}"
         line: 'Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin:/opt/addSofts/confSeeker'
+        create: true
+      loop:
+        - user

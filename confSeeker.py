@@ -21,8 +21,11 @@ import sys
 
 # PATH DEFINITION BEGIN #
 
+""" see if the path is the default one and adjust accordingly to launch 
+    the tools"""
 if '/opt/addSofts/confSeeker/tools/' in os.environ['PATH']:
     base_tool_dir = ('/opt/addSofts/confSeeker/tools/')
+
 else:
     base_tool_dir = (os.getcwd() + '/tools/')
 
@@ -34,8 +37,9 @@ else:
 
 base_folder = '/etc'
 default_file = '/etc/motd'
-#base_tool_dir = ('/opt/addSofts/confSeeker/tools/')
-#base_tool_dir = (os.getcwd() + '/tools/')
+
+""" by default the display program is cat, you can change this to less by 
+    commenting and uncommenting the lines below """
 defaut_list_file_tool = (base_tool_dir + 'cat_file.py')
 #defaut_list_file_tool = 'less'
 
@@ -49,6 +53,7 @@ def file_base_definition():
     '''' if no argument /etc ... we print the motd '''
     try:
         return sys.argv[1]
+
     except:
         return default_file
 
@@ -59,6 +64,7 @@ def creation_two_panes_first_zone(folder=base_folder):
     global leftPane
     global underPane
     global rightPane
+
     server = libtmux.Server()
     session = server.new_session('com_comander')
     window = session.select_window('com_comander')
@@ -76,8 +82,10 @@ def load_from_file(file):
         f = open(file, "r")
         data = f.read()
         f.close()
+
     except:
         pass
+
     return data
 
 
@@ -85,8 +93,10 @@ def triage(file):
     ''' sorts the type of configuration file and sends
         it to the right parser '''
     first_line = load_from_file(file)
+
     if first_line.startswith('<?xml'):
         leftPane.send_keys(base_tool_dir + 'xml_parser.py '+ file)
+
     else:
         leftPane.send_keys(base_tool_dir + 'unix_parser.py '+ file)
 
@@ -95,10 +105,12 @@ def creation_two_panes(file1 = '', file2 = ''):
     ''' launches the creation_two_panes of the tmux display and 
         launches the display in the panes '''
     creation_two_panes_first_zone()
+
     if file1 and file2:
         rightPane.send_keys(defaut_list_file_tool + ' ' + (file1))
         leftPane.send_keys(defaut_list_file_tool + ' ' + (file2))
         underPane.send_keys('diff ' + file1 + ' ' + file2)
+
     else:
         #print in the right panes
         rightPane.send_keys(defaut_list_file_tool + ' ' +\
@@ -119,12 +131,15 @@ def com_comander():
     ''' main function parsing the arguments '''
     if len(sys.argv) == 4 and sys.argv[1] == "diff":
         creation_two_panes(sys.argv[2], sys.argv[3])
+
     elif len(sys.argv) == 2 and (sys.argv[1] == "help" or sys.argv[1] == "-h"):
         help_com_comander()
+
     else:
         #if no session create one
         try:
             creation_two_panes()
+
         #if session parse the arguments
         except:
             com_comander_parser()
@@ -136,6 +151,7 @@ def com_comander_parser():
         able to launch the environment without argument.'''
     if len(sys.argv) == 2 and (sys.argv[1] == "close" or sys.argv[1] == "quit"):
         close_session()
+
     elif len(sys.argv) == 2 and sys.argv[1] == "help":
         help_com_comander() 
 
@@ -158,6 +174,6 @@ uid = os.getuid()
 
 if uid == 0:
     os.setuid(uid) 
-    
+
 com_comander()
 
