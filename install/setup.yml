@@ -2,7 +2,6 @@
 - name: Install of confSeeker
   hosts: confseekertarget
   become: true
-  gather_facts: false
   roles:
     - installConfSeeker
   tasks:

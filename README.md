@@ -4,15 +4,8 @@ An automation tool for people like me who are bored of having to do the same com
 ## Automatic install requirement
 	- ansible
 
-Debian Linux:
-```
-$ sudo apt update
-$ sudo apt install ansible
-```
-Fedora Linux:
-```
-$ sudo dnf install ansible
-```
+to install Ansible:
+[https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
 
 Then:
 ```
@@ -22,14 +15,29 @@ $ ansible-playbook ./setup.yml -u userNameWithAdminPrivileges -k -K
 
 you can change the installation targets by changing the hosts parameter in setup.yml
 
-### Tested on:
+![alt text](https://github.com/cybermeme/confSeeker/raw/devel/src/capture_ansible.gif "Ansible demo")
+
+
+### Tested on (as target install):
 	- Centos Stream 8
 	- Ubuntu 20.10
 
-## Manual install
+
+## Manual install requirement
 	- python3
 	- pip3
 	- tmux
+
+
+Debian Linux:
+```
+$ sudo apt update
+$ sudo apt install python3-pip tmux
+```
+Fedora Linux:
+```
+$ sudo dnf install python3-pip tmux
+```
 
 ```
 $ pip3 install -r ./requirement.txt
@@ -37,7 +45,7 @@ $ pip3 install -r ./requirement.txt
 
 ### difference between the two types of installations.
 
-Ansible will allow you to deploy the tool on the different servers you administrate.
+Ansible will allow you to deploy the tool on the different servers you administrate or on localhost or both.
 The manual installation will only be available locally and you will have to manually add the PATH if you wish.
 To add the path:
 
@@ -45,6 +53,7 @@ To add the path:
 $ export PATH=$PATH:PathToConfseeker
 ```
 and for persistence, add this line to the end of your local shell configuration file (e.g. /home/$(whoami)/.bashrc)
+
 
 ## How it works
 
@@ -55,6 +64,7 @@ For the installation, I used the Ansible tool and in order to be able to add the
 This module will look for the list of users in the home directory, will look for the home directories in the /etc/passwd file and if there is a correlation, will add the PATH at the end of this file.
 For future users, the line has been added at the end of /etc/profile with a builtin module of Ansible.
 
+
 ## Usage
 
 To start confSeeker, make sure confseeker is not already running.
@@ -63,14 +73,26 @@ If not, from the terminal, enter $ tmux attach-session
 If no arguments are entered, confseeker will open /etc/motd
 
 ```
-$ ./confSeeker.py help
 
 	Usage : ./confSeeker.py /path/to/file/to/parse
 
 ./confSeeker.py help = this message in the commander
 ./confSeeker.py diff /path/to/file1 /path/to/file2 = diff 2 files
 ./confSeeker.py [close|quit] = close the tool
+
+	-less- passed as last argument will use less instead of cat
+
+	ex: 
+		confSeeker.py /etc/services
+		confSeeker.py /etc/services -less-
+		confSeeker.py diff /etc/services /tmp/serives
+		confSeeker.py diff /etc/services /tmp/serives -less-
+
+
 ```
+
+![alt text](https://github.com/cybermeme/confSeeker/raw/devel/src/capture_confSeeker.gif "confSeeker demo")
+
 
 By default, when running confSeeker with or without sudo depending on the rights of the file to be read, the program will open tmux and split the window into three:
     - At the top right, a cat of the requested file appears, to take over, you just have to hit 'Enter', it is possible by modifying the defaut_list_file_tool variable to open the file with another program (ex: less)
@@ -81,8 +103,10 @@ By default, when running confSeeker with or without sudo depending on the rights
 
 When the work is finished, to close the environment, you must call confSeeker with either the close or quit option
 
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)

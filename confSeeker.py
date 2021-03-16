@@ -23,7 +23,7 @@ import sys
 
 """ see if the path is the default one and adjust accordingly to launch 
     the tools"""
-if '/opt/addSofts/confSeeker/tools/' in os.environ['PATH']:
+if '/opt/addSofts/confSeeker' in os.environ['PATH']:
     base_tool_dir = ('/opt/addSofts/confSeeker/tools/')
 
 else:
