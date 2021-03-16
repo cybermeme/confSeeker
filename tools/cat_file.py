@@ -17,6 +17,7 @@ def load_from_file(file):
         f = open(file, "r")
         data = f.read()
         f.close()
+
     except:
         pass
     print(data)

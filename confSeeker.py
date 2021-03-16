@@ -129,6 +129,14 @@ def close_session():
 
 def com_comander():
     ''' main function parsing the arguments '''
+    # If last argument is -less- use less instead cat
+    global defaut_list_file_tool
+    if sys.argv[len(sys.argv)-1] == '-less-':
+        defaut_list_file_tool = 'less'
+        print(sys.argv)
+        sys.argv.pop()
+        print(sys.argv)
+        
     if len(sys.argv) == 4 and sys.argv[1] == "diff":
         creation_two_panes(sys.argv[2], sys.argv[3])
 
@@ -161,7 +169,12 @@ def help_com_comander():
     print('\n\tUsage : ' + sys.argv[0] + ' /path/to/file/to/parse\n\n' \
           + sys.argv[0] + ' help = this message in the commander\n' \
           + sys.argv[0] + ' diff /path/to/file1 /path/to/file2 = diff 2 files\n' \
-          + sys.argv[0] + ' [close|quit] = close the tool\n')
+          + sys.argv[0] + ' [close|quit] = close the tool\n' \
+             + '\n\t-less- passed as last argument will use less instead of cat\n' \
+             + '\n\tex: \n\t\tconfSeeker.py /etc/services' \
+             + '\n\t\tconfSeeker.py /etc/services -less-' \
+             + '\n\t\tconfSeeker.py diff /etc/services /tmp/serives' \
+             + '\n\t\tconfSeeker.py diff /etc/services /tmp/serives -less-')
 
 # DEFINITIONS END #
 
@@ -175,5 +188,6 @@ uid = os.getuid()
 if uid == 0:
     os.setuid(uid) 
 
+# Launching the main function
 com_comander()
 

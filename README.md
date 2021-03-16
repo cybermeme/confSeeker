@@ -1,11 +1,19 @@
 # confSeeker
 An automation tool for people like me who are bored of having to do the same commands over and over again just to look at and modify a configuration file
 
-## Automatic install
-first install :
+## Automatic install requirement
 	- ansible
-	- python3
-	- tmux
+
+Debian Linux:
+```
+$ sudo apt update
+$ sudo apt install ansible
+```
+Fedora Linux:
+```
+$ sudo dnf install ansible
+```
+
 Then:
 ```
 $ cd install
@@ -15,8 +23,8 @@ $ ansible-playbook ./setup.yml -u userNameWithAdminPrivileges -k -K
 you can change the installation targets by changing the hosts parameter in setup.yml
 
 ### Tested on:
-Centos Srteam 8
-Ubuntu 20.10
+	- Centos Stream 8
+	- Ubuntu 20.10
 
 ## Manual install
 	- python3

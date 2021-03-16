@@ -16,9 +16,11 @@ def xml_decode(fileName):
     openFile = ET.ElementTree(file=fileName)
     for elem in openFile.iter():
         print (elem.tag, elem.attrib)
-    input()
-    print('\n'*2 + 'Back in Prompt\n')
 
 
 os.system('clear')
+
 xml_decode(sys.argv[1])
+
+input()
+print('\n'*2 + 'Back in Prompt\n')

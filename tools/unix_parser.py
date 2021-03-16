@@ -10,12 +10,28 @@ import os
 import sys
 
 
+# ARGUMENTS BEGIN #
+
+''' defines the start of line arguments for comments '''
+comment_argument = ['#', ';', '//']
+
+# ARGUMENTS END #
+
+
+
+# DEFINITION BEGIN #
+
 def clean_line(data):
-    ''' remove the lines beginning with # or ;; '''
-    if not data.startswith('#') and not data.startswith(';'):
-        return data.replace("\n","")
-    else:
-        pass
+    ''' remove the lines beginning with # or ;; 
+        (defined in comment_argument)'''
+    for x in comment_argument:
+
+        if data.startswith(str(x)):
+            break
+
+        else:
+            return data.replace("\n","")
+
 
 # nettoyage des fichiers == grep -v '^#' | grep -v '^$'
 def clean_file(file):
@@ -26,20 +42,29 @@ def clean_file(file):
     try:
         openFile = open(file, "r")
         data = openFile.readlines()
+
         for lines in data:
             compteur += 1
             dataClean = clean_line(lines.strip())
+
             if dataClean != None and dataClean != '':
                 joliData = ('Ligne ' + str(compteur)).ljust(12,'-')
                 print(joliData, dataClean)
         f.close()
+
     except:
         return 1
+
     return 0
 
+# DEFINITION END #
 
+
+
+# MAIN START #
 
 os.system('clear')
+
 clean_file(sys.argv[1])
 input()
 print('\n'*2 + 'Back in Prompt\n')
