@@ -85,8 +85,8 @@ If no arguments are entered, confseeker will open /etc/motd
 	ex: 
 		confSeeker.py /etc/services
 		confSeeker.py /etc/services -less-
-		confSeeker.py diff /etc/services /tmp/serives
-		confSeeker.py diff /etc/services /tmp/serives -less-
+		confSeeker.py diff /etc/services /tmp/services
+		confSeeker.py diff /etc/services /tmp/services -less-
 
 
 ```
