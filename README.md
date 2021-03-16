@@ -10,6 +10,7 @@ to install Ansible:
 Then:
 ```
 $ cd install
+$ for i in $(grep ^[0-9] inventory); do ssh-keyscan $i >> ~/.ssh/known-hosts; done
 $ ansible-playbook ./setup.yml -u userNameWithAdminPrivileges -k -K
 ```
 
