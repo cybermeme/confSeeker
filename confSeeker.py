@@ -133,9 +133,7 @@ def com_comander():
     global defaut_list_file_tool
     if sys.argv[len(sys.argv)-1] == '-less-':
         defaut_list_file_tool = 'less'
-        print(sys.argv)
         sys.argv.pop()
-        print(sys.argv)
         
     if len(sys.argv) == 4 and sys.argv[1] == "diff":
         creation_two_panes(sys.argv[2], sys.argv[3])
