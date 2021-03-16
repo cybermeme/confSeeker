@@ -24,13 +24,14 @@ comment_argument = ['#', ';', '//']
 def clean_line(data):
     ''' remove the lines beginning with # or ;; 
         (defined in comment_argument)'''
+    dataToReturn = True
     for x in comment_argument:
 
         if data.startswith(str(x)):
-            break
+            dataToReturn = False
 
-        else:
-            return data.replace("\n","")
+    if dataToReturn:
+        return data.replace("\n","")
 
 
 # nettoyage des fichiers == grep -v '^#' | grep -v '^$'
