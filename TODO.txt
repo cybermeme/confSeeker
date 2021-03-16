@@ -1,3 +1,6 @@
 Options to add:
 	- close only the current window / every window in once
 	- open new file in new window
+
+Secu:
+	- when using sudo it change the user to root in the prompt, maybe it is better to change it to the original UID ? 
